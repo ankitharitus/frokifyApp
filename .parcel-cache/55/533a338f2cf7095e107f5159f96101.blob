@@ -1,0 +1,49 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _View = require('./View');
+var _ViewDefault = _parcelHelpers.interopDefault(_View);
+var _urlImgIconsSvg = require('url:../../img/icons.svg');
+var _urlImgIconsSvgDefault = _parcelHelpers.interopDefault(_urlImgIconsSvg);
+const searchForm = document.querySelector('.search');
+class SearchView extends _ViewDefault.default {
+  query;
+  parent = document.querySelector('.results');
+  errorMessage = 'Could not found this recipe.Please try with another one!';
+  getQuery() {
+    this.query = searchForm.querySelector('.search__field').value;
+    this.clearSearchbar();
+    return this.query;
+  }
+  clearSearchbar() {
+    searchForm.querySelector('.search__field').value = '';
+  }
+  searchHandler(fun) {
+    searchForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      fun();
+    });
+  }
+  generateMarkup() {
+    let data = this.data;
+    const id = window.location.hash.slice(1);
+    return data.map(el => {
+      return ` <li class="preview">
+        <a class="preview__link ${id === el.id ? 'preview__link--active' : ''} " href="#${el.id}">
+          <figure class="preview__fig">
+            <img src="${el.image}" alt="Test" />
+          </figure>
+          <div class="preview__data">
+            <h4 class="preview__title">${el.title}</h4>
+            <p class="preview__publisher">${el.publisher}</p>
+            <div class="preview__user-generated">
+              <svg>
+                <use href="${_urlImgIconsSvgDefault.default}#icon-user"></use>
+              </svg>
+            </div>
+          </div>
+        </a>
+      </li>`;
+    }).join('');
+  }
+}
+exports.default = new SearchView();

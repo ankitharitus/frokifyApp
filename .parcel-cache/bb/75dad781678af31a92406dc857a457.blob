@@ -1,0 +1,10 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+class recipeView {
+  #undefined = document.querySelector('.recipe');
+  #undefined;
+  render(datas) {
+    this.#undefined = datas;
+  }
+}
+exports.default = new recipeView();

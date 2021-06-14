@@ -1,0 +1,37 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _View = require('./View');
+var _ViewDefault = _parcelHelpers.interopDefault(_View);
+var _urlImgIconsSvg = require('url:../../img/icons.svg');
+var _urlImgIconsSvgDefault = _parcelHelpers.interopDefault(_urlImgIconsSvg);
+class BookMarkView extends _ViewDefault.default {
+  query;
+  parent = document.querySelector('.bookmarks__list');
+  errorMessage = 'No bookmark yet !';
+  eventHandler(fun) {
+    window.addEventListener('load', fun);
+  }
+  generateMarkup() {
+    let data = this.data;
+    const id = window.location.hash.slice(1);
+    return data.map(el => {
+      return ` <li class="preview">
+          <a class="preview__link ${id === el.id ? 'preview__link--active' : ''} " href="#${el.id}">
+            <figure class="preview__fig">
+              <img src="${el.image}" alt="Test" />
+            </figure>
+            <div class="preview__data">
+              <h4 class="preview__title">${el.title}</h4>
+              <p class="preview__publisher">${el.publisher}</p>
+              <div class="preview__user-generated ${el.key ? '' : 'hidden'}">
+                <svg>
+                  <use href="${_urlImgIconsSvgDefault.default}#icon-user"></use>
+                </svg>
+              </div>
+            </div>
+          </a>
+        </li>`;
+    }).join('');
+  }
+}
+exports.default = new BookMarkView();

@@ -1,0 +1,15 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+require('url:../../img/icons.svg');
+var _View = require('./View');
+var _ViewDefault = _parcelHelpers.interopDefault(_View);
+class PagingView extends _ViewDefault.default {
+  parent = document.querySelector('.pagination');
+  generateMarkup() {
+    console.log(this.data.result.length);
+    // const cuurentP = this.data.state.result.length / this.data.resultPerpage;
+    // console.log(cuurentP);
+    return 'hj';
+  }
+}
+exports.default = new PagingView();

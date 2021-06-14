@@ -1,0 +1,49 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _urlImgIconsSvg = require('url:../../img/icons.svg');
+var _urlImgIconsSvgDefault = _parcelHelpers.interopDefault(_urlImgIconsSvg);
+var _View = require('./View');
+var _ViewDefault = _parcelHelpers.interopDefault(_View);
+class PagingView extends _ViewDefault.default {
+  parent = document.querySelector('.pagination');
+  clickHandler(fun) {
+    this.parent.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--inline');
+      if (!btn) return;
+      console.log(btn.dataset.offno);
+    });
+  }
+  generateMarkup() {
+    const noPage = Math.ceil(this.data.result.length / this.data.resultPerPage);
+    const curPage = this.data.page;
+    if (curPage === 1 && noPage > 1) return `
+    <button data-offNo=${curPage + 1} class="btn--inline pagination__btn--next">
+        <span>Page ${curPage + 1}</span>
+        <svg class="search__icon">
+        <use href="${_urlImgIconsSvgDefault.default}#icon-arrow-right"></use>
+        </svg>
+    </button>`;
+    if (curPage === noPage && noPage > 1) return `
+      <button data-offNo=${curPage - 1} class="btn--inline pagination__btn--prev">
+        <svg class="search__icon">
+          <use href="${_urlImgIconsSvgDefault.default}#icon-arrow-left"></use>
+        </svg>
+        <span>Page ${curPage - 1}</span>
+      </button>`;
+    if (curPage < noPage) return ` 
+      <button data-offNo=${curPage + 1} class="btn--inline pagination__btn--next">
+        <span>Page ${curPage + 1}</span>
+        <svg class="search__icon">
+        <use href="${_urlImgIconsSvgDefault.default}#icon-arrow-right"></use>
+        </svg>
+     </button>
+     <button data-offNo=${curPage - 1} class="btn--inline pagination__btn--prev">
+        <svg class="search__icon">
+          <use href="${_urlImgIconsSvgDefault.default}#icon-arrow-left"></use>
+        </svg>
+        <span>Page ${curPage - 1}</span>
+      </button>`;
+    return '';
+  }
+}
+exports.default = new PagingView();

@@ -1,0 +1,11 @@
+"use strict";
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+class recipeView {
+  parent = document.querySelector('.recipe');
+  data;
+  render(data) {
+    this.data = data;
+  }
+}
+exports.default = new recipeView();

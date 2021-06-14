@@ -1,0 +1,55 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "state", function () {
+  return state;
+});
+_parcelHelpers.export(exports, "loadRecipe", function () {
+  return loadRecipe;
+});
+_parcelHelpers.export(exports, "loadSearchResult", function () {
+  return loadSearchResult;
+});
+var _config = require('./config');
+var _helper = require('./helper');
+const state = {
+  recipe: {},
+  search: {
+    query: '',
+    result: []
+  }
+};
+const loadRecipe = async function (id) {
+  try {
+    if (!id) return;
+    let recipe = await _helper.getJson(`${_config.URL_API}/${id}`);
+    recipe = recipe.recipe;
+    state.recipe = {
+      publisher: recipe.publisher,
+      image: recipe.image_url,
+      ingredients: recipe.ingredients,
+      id: recipe.id,
+      title: recipe.title,
+      servings: recipe.servings,
+      cookingTime: recipe.cooking_time,
+      sourceUrl: recipe.source_url
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+const loadSearchResult = async function (query) {
+  try {
+    if (!query) return;
+    const data = await _helper.getJson(`${_config.URL_API}?search=pizza`);
+    state.search.result = data.recipes.map(rec => {
+      return {
+        publisher: rec.publisher,
+        image: rec.image_url,
+        id: rec.id,
+        title: rec.title
+      };
+    });
+  } catch (err) {
+    throw err;
+  }
+};

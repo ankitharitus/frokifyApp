@@ -1,0 +1,28 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "recipe", function () {
+  return recipe;
+});
+_parcelHelpers.export(exports, "loadRecipe", function () {
+  return loadRecipe;
+});
+const recipe = {
+  state: {}
+};
+const loadRecipe = async function (id) {
+  const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
+  const data = await res.json();
+  if (!res.ok) throw new Error(`${data.message}`);
+  let {recipe} = data.data;
+  recipe.state = {
+    publisher: recipe.publisher,
+    image: recipe.image_url,
+    ingredients: recipe.ingredients,
+    id: recipe.id,
+    title: recipe.title,
+    servings: recipe.servings,
+    cookingTime: recipe.cooking_time,
+    sourceUrl: recipe.source_url
+  };
+  console.log(recipe);
+};

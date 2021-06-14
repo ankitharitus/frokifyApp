@@ -1,0 +1,17 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "getJson", function () {
+  return getJson;
+});
+const getJson = async function (url) {
+  try {
+    console.log(url);
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!res.ok) throw new Error(`${data.message}`);
+    let {recipe} = data.data;
+    return recipe;
+  } catch (err) {
+    throw new Error(err);
+  }
+};

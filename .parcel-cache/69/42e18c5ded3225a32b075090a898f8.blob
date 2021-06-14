@@ -1,0 +1,36 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _View = require('./View');
+var _ViewDefault = _parcelHelpers.interopDefault(_View);
+require('url:../../img/icons.svg');
+class AddRecipeView extends _ViewDefault.default {
+  parent = document.querySelector('.upload');
+  window = document.querySelector('.add-recipe-window');
+  overlay = document.querySelector('.overlay');
+  recipeBtn = document.querySelector('.nav__btn--add-recipe');
+  closeBtn = document.querySelector('.btn--close-modal');
+  constructor() {
+    super();
+    this.showWindow();
+    this.hideWindow();
+  }
+  toggleWindow() {
+    this.window.classList.toggle('hidden');
+    this.overlay.classList.toggle('hidden');
+  }
+  showWindow() {
+    this.recipeBtn.addEventListener('click', this.toggleWindow.bind(this));
+  }
+  hideWindow() {
+    this.closeBtn.addEventListener('click', this.toggleWindow.bind(this));
+    this.overlay.addEventListener('click', this.toggleWindow.bind(this));
+  }
+  uploadRecipe(fun) {
+    this.parent.addEventListener('click', function (e) {
+      e.preventDefault();
+      fun('hn bhai');
+    });
+  }
+  generateMarkup() {}
+}
+exports.default = new AddRecipeView();

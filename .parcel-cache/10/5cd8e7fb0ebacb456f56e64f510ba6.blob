@@ -1,0 +1,39 @@
+var _ModelJs = require('./Model.js');
+var _ViewsRecipeView = require('./Views/recipeView');
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+var _ViewsRecipeViewDefault = _parcelHelpers.interopDefault(_ViewsRecipeView);
+var _ViewsSearchView = require('./Views/searchView');
+var _ViewsSearchViewDefault = _parcelHelpers.interopDefault(_ViewsSearchView);
+const recipeContainer = document.querySelector('.recipe');
+// https://forkify-api.herokuapp.com/v2
+// /////////////////////////////////////
+const getRecipe = async function () {
+  try {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    _ViewsRecipeViewDefault.default.renderSpinner();
+    await _ModelJs.loadRecipe(id);
+    const recipe = _ModelJs.state.recipe;
+    _ViewsRecipeViewDefault.default.render(recipe);
+  } catch (err) {
+    _ViewsRecipeViewDefault.default.renderError(err);
+  }
+};
+const searchRecipe = async function () {
+  try {
+    _ViewsSearchViewDefault.default.renderSpinner();
+    const query = _ViewsSearchViewDefault.default.getQuery();
+    await _ModelJs.loadSearchResult(query);
+    const searchresult = _ModelJs.state.search.result;
+    // searchView.render(searchresult);
+    _ModelJs.render(getSearchResult(1));
+    console.log('kl');
+  } catch (err) {
+    console.log(err);
+  }
+};
+const init = function () {
+  _ViewsRecipeViewDefault.default.renderHandler(getRecipe);
+  _ViewsSearchViewDefault.default.searchHandler(searchRecipe);
+};
+init();

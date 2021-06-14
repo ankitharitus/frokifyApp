@@ -1,0 +1,45 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "getJson", function () {
+  return getJson;
+});
+_parcelHelpers.export(exports, "setJson", function () {
+  return setJson;
+});
+var _config = require('./config');
+const timeout = function (s) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error(`Request took too long! Timeout after ${s} second`));
+    }, s * 1000);
+  });
+};
+const getJson = async function (url) {
+  try {
+    const res = await Promise.race([fetch(url), timeout(`${_config.TimeOut}`)]);
+    const data = await res.json();
+    if (!res.ok) throw new Error(`${data.message}`);
+    let recipe = data.data;
+    return recipe;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+const setJson = async function (url, data) {
+  try {
+    const fetchPro = fetch(url, {
+      type: 'POST',
+      headers: {
+        'Content-Type': 'application/JSON'
+      },
+      body: JSON.stringify()
+    });
+    const res = await Promise.race([fetchPro, timeout(`${_config.TimeOut}`)]);
+    const data = await res.json();
+    if (!res.ok) throw new Error(`${data.message}`);
+    let recipe = data.data;
+    return recipe;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
